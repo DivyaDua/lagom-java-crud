@@ -11,7 +11,6 @@ public class UserConsumerClass {
 
     @Inject
     public UserConsumerClass(UserConsumerService service) {
-        System.out.println("\n\nI am here");
         service.userConsumerTopic()
                 .subscribe()
                 .atLeastOnce(Flow.fromFunction(this::processUser));

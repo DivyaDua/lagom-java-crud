@@ -35,7 +35,6 @@ public class UserServiceImpl implements UserService {
      */
     @Inject
     public UserServiceImpl(final PersistentEntityRegistry registry,
-                           //UserService userService,
                            final CassandraSession cassandraSession,
                            ReadSide readSide) {
         this.persistentEntityRegistry = registry;
@@ -43,17 +42,7 @@ public class UserServiceImpl implements UserService {
 
         persistentEntityRegistry.register(UserEntity.class);
         readSide.register(UserEventProcessor.class);
-
-        /*System.out.println("\n\n*****Inside user service impl****");
-        userService.usersTopic()
-                .subscribe()
-                .atLeastOnce(Flow.fromFunction(this::processUser));*/
     }
-
-    /*private Done processUser(User user) {
-        System.out.println("Hello " + user.getName());
-        return Done.getInstance();
-    }*/
 
     /**
      * User Entity Ref.
@@ -84,15 +73,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ServiceCall<NotUsed, Optional<User>> getUser(String id) {
-        return request -> {
-            return session.selectOne("SELECT * FROM user_service.user WHERE id = ?", id)
-                    .thenApply(row -> row.map(row1 -> User.builder().id(row1.getString("id"))
-                            .name(row1.getString("name"))
-                            .age(row1.getInt("age")).build()));
-
-            //PersistentEntityRef<UserCommands> ref = userEntityRef(id);
-            //return ref.ask(UserCommands.UserCurrentState.builder().build());
-        };
+        return request -> session.selectOne("SELECT * FROM user_service.user WHERE id = ?", id)
+                .thenApply(row -> row.map(row1 -> User.builder().id(row1.getString("id"))
+                        .name(row1.getString("name"))
+                        .age(row1.getInt("age")).build()));
     }
 
     @Override

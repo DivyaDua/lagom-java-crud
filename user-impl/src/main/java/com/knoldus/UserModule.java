@@ -7,6 +7,5 @@ public class UserModule extends AbstractModule implements ServiceGuiceSupport {
     @Override
     protected void configure() {
         bindService(UserService.class, UserServiceImpl.class);
-//        bind(UserConsumerClass.class).asEagerSingleton();
     }
 }
