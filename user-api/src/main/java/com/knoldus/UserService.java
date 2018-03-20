@@ -10,15 +10,14 @@ import com.lightbend.lagom.javadsl.api.transport.Method;
 
 import java.util.Optional;
 
-import static com.lightbend.lagom.javadsl.api.Service.named;
-import static com.lightbend.lagom.javadsl.api.Service.restCall;
-import static com.lightbend.lagom.javadsl.api.Service.topic;
+import static com.lightbend.lagom.javadsl.api.Service.*;
 
 public interface UserService extends Service {
 
     String USERS_TOPIC = "user";
 
     Topic<User> usersTopic();
+
     /**
      * @return User response.
      */

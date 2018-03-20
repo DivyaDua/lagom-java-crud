@@ -3,21 +3,15 @@ package com.knoldus;
 import akka.Done;
 import akka.NotUsed;
 import akka.japi.Pair;
-
-import com.knoldus.eventsourcing.UserEntity;
-import com.knoldus.eventsourcing.UserEventProcessor;
-import com.knoldus.eventsourcing.UserCommands;
-import com.knoldus.eventsourcing.UserEventTag;
-import com.knoldus.eventsourcing.UserEvent;
-
+import com.knoldus.eventsourcing.*;
 import com.lightbend.lagom.javadsl.api.ServiceCall;
 import com.lightbend.lagom.javadsl.api.broker.Topic;
 import com.lightbend.lagom.javadsl.broker.TopicProducer;
 import com.lightbend.lagom.javadsl.persistence.Offset;
 import com.lightbend.lagom.javadsl.persistence.PersistentEntityRef;
 import com.lightbend.lagom.javadsl.persistence.PersistentEntityRegistry;
-import com.lightbend.lagom.javadsl.persistence.cassandra.CassandraSession;
 import com.lightbend.lagom.javadsl.persistence.ReadSide;
+import com.lightbend.lagom.javadsl.persistence.cassandra.CassandraSession;
 
 import javax.inject.Inject;
 import java.util.Optional;
@@ -29,8 +23,9 @@ public class UserServiceImpl implements UserService {
 
     /**
      * Constructor.
-     * @param registry - PersistentEntityRegistry
-     * @param readSide - Cassandra ReadSide
+     *
+     * @param registry         - PersistentEntityRegistry
+     * @param readSide         - Cassandra ReadSide
      * @param cassandraSession - Cassandra Session
      */
     @Inject
@@ -46,6 +41,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * User Entity Ref.
+     *
      * @param id identifier
      * @return persistent entity ref
      */

@@ -9,6 +9,6 @@ public class UserConsumerModule extends AbstractModule implements ServiceGuiceSu
     protected void configure() {
         bindServiceInfo(ServiceInfo.of("user-consumer-service"));
         bindClient(UserConsumerService.class);
-        bind(UserConsumerClass.class).asEagerSingleton();
+        bind(UserConsumer.class).asEagerSingleton();
     }
 }

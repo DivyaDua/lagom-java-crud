@@ -7,10 +7,10 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class UserConsumerClass {
+public class UserConsumer {
 
     @Inject
-    public UserConsumerClass(UserConsumerService service) {
+    public UserConsumer(UserConsumerService service) {
         service.userConsumerTopic()
                 .subscribe()
                 .atLeastOnce(Flow.fromFunction(this::processUser));

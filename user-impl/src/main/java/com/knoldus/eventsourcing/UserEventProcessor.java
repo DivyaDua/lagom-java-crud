@@ -3,14 +3,14 @@ package com.knoldus.eventsourcing;
 import akka.Done;
 import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.PreparedStatement;
-import com.lightbend.lagom.javadsl.persistence.cassandra.CassandraReadSide;
-import com.lightbend.lagom.javadsl.persistence.cassandra.CassandraSession;
+import com.knoldus.eventsourcing.UserEvent.UserCreated;
 import com.lightbend.lagom.javadsl.persistence.AggregateEventTag;
 import com.lightbend.lagom.javadsl.persistence.ReadSideProcessor;
+import com.lightbend.lagom.javadsl.persistence.cassandra.CassandraReadSide;
+import com.lightbend.lagom.javadsl.persistence.cassandra.CassandraSession;
 import org.pcollections.PSequence;
 import org.pcollections.TreePVector;
 
-import com.knoldus.eventsourcing.UserEvent.UserCreated;
 import javax.inject.Inject;
 import java.util.Collections;
 import java.util.List;
@@ -25,7 +25,8 @@ public class UserEventProcessor extends ReadSideProcessor<UserEvent> {
 
     /**
      * UserEventProcessor Constructor.
-     * @param session - Cassandra Session
+     *
+     * @param session  - Cassandra Session
      * @param readSide - Cassandra ReadSide
      */
     @Inject
@@ -36,6 +37,7 @@ public class UserEventProcessor extends ReadSideProcessor<UserEvent> {
 
     /**
      * Build handler.
+     *
      * @return ReadSideHandler of UserEvent
      */
     @Override
@@ -49,6 +51,7 @@ public class UserEventProcessor extends ReadSideProcessor<UserEvent> {
 
     /**
      * Aggregate Event Tags.
+     *
      * @return UserEvent
      */
     @Override
@@ -58,17 +61,19 @@ public class UserEventProcessor extends ReadSideProcessor<UserEvent> {
 
     /**
      * Create user table.
+     *
      * @return Done
      */
     private CompletionStage<Done> createTable() {
         return cassandraSession.executeCreateTable(
                 "CREATE TABLE IF NOT EXISTS user_service.user ("
-                         + "id TEXT, name TEXT, age INT, PRIMARY KEY(id))"
+                        + "id TEXT, name TEXT, age INT, PRIMARY KEY(id))"
         );
     }
 
     /**
      * Prepare Insert Statements.
+     *
      * @return Done
      */
     private CompletionStage<Done> prepareCreateUserStmt() {
@@ -82,6 +87,7 @@ public class UserEventProcessor extends ReadSideProcessor<UserEvent> {
 
     /**
      * Bind user values to insert statement.
+     *
      * @param userCreated UserCreated event
      * @return List of BoundStatement
      */

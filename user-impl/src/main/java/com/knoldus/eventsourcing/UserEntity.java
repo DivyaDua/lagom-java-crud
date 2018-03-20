@@ -10,15 +10,15 @@ public class UserEntity extends PersistentEntity<UserCommands, UserEvent, UserSt
 
     @Override
     public Behavior initialBehavior(Optional<UserState> snapshotState) {
-        // initial behaviour of movie
+
         BehaviorBuilder behaviorBuilder = newBehaviorBuilder(
                 UserState.builder().user(Optional.empty())
                         .timestamp(LocalDateTime.now().toString()).build()
         );
 
         behaviorBuilder.setCommandHandler(UserCommands.CreateUser.class, (cmd, ctx) ->
-                    ctx.thenPersist(UserEvent.UserCreated.builder().user(cmd.getUser())
-                            .entityId(entityId()).build(), evt -> ctx.reply(Done.getInstance()))
+                ctx.thenPersist(UserEvent.UserCreated.builder().user(cmd.getUser())
+                        .entityId(entityId()).build(), evt -> ctx.reply(Done.getInstance()))
         );
 
         behaviorBuilder.setEventHandler(UserEvent.UserCreated.class, evt ->
@@ -26,7 +26,7 @@ public class UserEntity extends PersistentEntity<UserCommands, UserEvent, UserSt
                         .timestamp(LocalDateTime.now().toString()).build()
         );
 
-        behaviorBuilder.setReadOnlyCommandHandler(UserCommands.UserCurrentState.class, (cmd, ctx) ->
+        behaviorBuilder.setReadOnlyCommandHandler(UserCommands.GetUser.class, (cmd, ctx) ->
                 ctx.reply(state().getUser())
         );
 
