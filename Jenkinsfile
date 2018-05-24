@@ -2,7 +2,7 @@ pipeline {
 	agent any
 	stages{
 		stage('Test') {
-            		mvn clean verify
+            		sh 'mvn clean verify'
 		}
 	}
 }
